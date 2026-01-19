@@ -42,7 +42,7 @@ services:
         fromService:
           type: web
           name: reachinbox-backend
-          property: url
+          property: hostport
 
   - type: redis
     name: reachinbox-redis
