@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import ComposeEmail from '../components/ComposeEmail';
 import api from '../api';
-import { Plus, RefreshCw, Mail, CheckCircle, XCircle, Clock } from 'lucide-react';
+import { Plus, Mail } from 'lucide-react';
 import clsx from 'clsx';
 
 interface Job {
