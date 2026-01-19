@@ -43,14 +43,13 @@ services:
           name: reachinbox-backend
           property: url
 
+  - type: redis
+    name: reachinbox-redis
+    plan: free
+    ipAllowList: [] # Allow internal access only
+
 databases:
   - name: reachinbox-db
     plan: free
     databaseName: reachinbox
     user: reachinbox
-
-services:
-  - type: redis
-    name: reachinbox-redis
-    plan: free
-    ipAllowList: [] # Allow internal access only
