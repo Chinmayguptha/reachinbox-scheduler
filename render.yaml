@@ -1,0 +1,56 @@
+services:
+  # Backend API
+  - type: web
+    name: reachinbox-backend
+    env: node
+    plan: free
+    rootDir: apps/backend
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 3000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: reachinbox-db
+          property: connectionString
+      - key: REDIS_HOST
+        fromService:
+          type: redis
+          name: reachinbox-redis
+          property: host
+      - key: REDIS_PORT
+        fromService:
+          type: redis
+          name: reachinbox-redis
+          property: port
+      - key: ETHEREAL_EMAIL
+        value: test@ethereal.email
+      - key: ETHEREAL_PASS
+        value: password
+
+  # Frontend (Static Site)
+  - type: static
+    name: reachinbox-frontend
+    env: static
+    rootDir: apps/frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: reachinbox-backend
+          property: url
+
+databases:
+  - name: reachinbox-db
+    plan: free
+    databaseName: reachinbox
+    user: reachinbox
+
+services:
+  - type: redis
+    name: reachinbox-redis
+    plan: free
+    ipAllowList: [] # Allow internal access only
