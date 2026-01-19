@@ -29,13 +29,14 @@ services:
       - key: ETHEREAL_PASS
         value: password
 
-  # Frontend (Static Site)
-  - type: static
+  # Frontend (Served as Web Service to avoid "static" type errors)
+  - type: web
     name: reachinbox-frontend
-    env: static
+    env: node
+    plan: free
     rootDir: apps/frontend
     buildCommand: npm install && npm run build
-    staticPublishPath: ./dist
+    startCommand: npx -y serve -s dist -l $PORT
     envVars:
       - key: VITE_API_URL
         fromService:
